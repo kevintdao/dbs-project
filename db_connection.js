@@ -1,13 +1,27 @@
-const mysql = require('mysql');
+import mysql from 'serverless-mysql';
 
-const connection = mysql.createConnection({
-	host     : 'localhost',
-	user     : 'root',
-	password : 'password',
-	database : 'video_games'
-});
-connection.connect(function(err) {
-    if (err) throw err;
-});
+MYSQL_HOST= localhost
+MYSQL_PORT= 3306
+MYSQL_DATABASE= video_games
+MYSQL_USER= {root}  //user here
+MYSQL_PASSWORD= {password}
 
-module.exports = connection;
+
+const db = mysql({
+  config: {
+    host: process.env.MYSQL_HOST,
+    port: process.env.MYSQL_PORT,
+    database: process.env.MYSQL_DATABASE,
+    user: process.env.MYSQL_USER,
+    password: process.env.MYSQL_PASSWORD
+  }
+});
+export default async function excuteQuery({ query, values }) {
+  try {
+    const results = await db.query(query, values);
+    await db.end();
+    return results;
+  } catch (error) {
+    return { error };
+  }
+}
