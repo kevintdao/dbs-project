@@ -1,5 +1,8 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
+import nc from 'next-connect'
+import { getData } from '../../queries/queries'
 
-export default function handler(req, res) {
-  res.status(200).json({ name: 'John Doe' })
-}
+const handler = nc()
+handler.get(getData)
+
+export default handler
