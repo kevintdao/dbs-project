@@ -6,7 +6,8 @@ const getData = async (req, res) => {
 }
 
 const insertUser = async (req, res) => {
-  let data = await executeQuery("INSERT INTO USER(name, age) VALUES(?,?)", ['test', 18])
+  const body = JSON.parse(req.body)
+  let data = await executeQuery("INSERT INTO USER(name, age) VALUES(?,?)", [body.name, body.age])
   res.send(data)
 }
 

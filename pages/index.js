@@ -10,7 +10,19 @@ export default function Home() {
 
   const onSubmit = async (e) => {
     e.preventDefault()
-    console.log(e.target.name.value)
+
+    const data = {
+      name: e.target.name.value,
+      age: e.target.age.value
+    }
+
+    const res = await fetch('/api/add_user', {
+      method: 'POST',
+      body: JSON.stringify(data)
+    })
+
+    const result = await res.json()
+    console.log(result)
   }
 
   return (
