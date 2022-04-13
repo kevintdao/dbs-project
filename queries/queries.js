@@ -18,4 +18,9 @@ const insertUser = async (req, res) => {
   })
 }
 
-export { getData, insertUser }
+const getGames = async (req, res) => {
+  let data = await executeQuery("SELECT * from mytable ORDER BY RAND() LIMIT 10", [])
+  res.send(data)
+}
+
+export { getData, insertUser, getGames }
