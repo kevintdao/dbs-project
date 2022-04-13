@@ -1,6 +1,10 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { useRouter } from 'next/router'
 
 export default function Home() {
+  const router = useRouter()
+  const [error, setError] = useState('')
+
   const styles = {
     form: "space-y-4 mt-2",
     grid: "grid md:grid-cols-2 gap-4 grid-cols-1",
@@ -12,6 +16,7 @@ export default function Home() {
   const onSubmit = async (e) => {
     e.preventDefault()
 
+    setError('')
     const data = {
       name: e.target.name.value,
       age: e.target.age.value
@@ -23,7 +28,12 @@ export default function Home() {
     })
 
     const result = await res.json()
-    console.log(result)
+    
+    if(res.ok){
+      router.push('/video_games')
+    } else{
+      setError(result.error)
+    }
   }
 
   return (

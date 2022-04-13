@@ -14,7 +14,7 @@ const insertUser = async (req, res) => {
   })
   .catch(err => {
     console.log(err)
-    res.status(400).json({ error: err })
+    res.status(400).json({ error: 'Error with API request' })
   })
 }
 
