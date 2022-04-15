@@ -6,9 +6,11 @@ export default function games() {
   const [data, setData] = useState(null)
   const [index, setIndex] = useState(0)
   const [choice, setChoice] = useState()
+  const [error, setError] = useState('')
 
   const styles = {
-    button: "bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded",
+    form: "space-y-4 mt-2",
+    button: "bg-blue-600 hover:bg-blue-700 hover:cursor-pointer text-white font-bold py-2 px-4 rounded",
     card_container: "border p-2 rounded text-center shadow-md",
     icon: "h-21 w-21"
   }
@@ -32,7 +34,29 @@ export default function games() {
 
   const onSubmit = async (e) => {
     e.preventDefault()
-    console.log(e.target)
+
+    setError('')
+    const formData = {
+      user_id: 2,
+      video_game_id: data[index].id,
+      selection: choice
+    }
+
+    const res = await fetch('/api/add_selection', {
+      method: 'POST',
+      body: JSON.stringify(formData)
+    })
+
+    const result = await res.json()
+    
+    if(res.ok){
+      console.log(res)
+    } else{
+      setError(result.error)
+    }
+    
+    setChoice('')
+    setIndex(currIndex => currIndex + 1)
   }
 
   const onChoiceChange = (e) => {
@@ -42,8 +66,8 @@ export default function games() {
   if(!data) return <p>Loading...</p>
 
   return (
-    <div className='space-y-4 mt-2'>
-      <VideoGames data={data[index]} index={index} onSubmit={onSubmit}/>
+    <form className={styles.form} onSubmit={onSubmit}>
+      <VideoGames data={data[index]} index={index}/>
       <div className='grid md:grid-cols-4 gap-4 grid-cols-2'>
         {choices.map((item, i) => (
           <div className={`${styles.card_container} ${choice == item.value ? 'bg-blue-200 border-blue-300' : 'border-gray-300 bg-white'}`} key={i}>
@@ -59,6 +83,6 @@ export default function games() {
         ))}
       </div>
       <input type="submit" value="Next" className={styles.button} />
-    </div>
+    </form>
   )
 }

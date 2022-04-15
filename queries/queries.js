@@ -23,4 +23,17 @@ const getGames = async (req, res) => {
   res.send(data)
 }
 
-export { getData, insertUser, getGames }
+const insertSelection = async (req, res) => {
+  const body = JSON.parse(req.body)
+  executeQuery("INSERT INTO USER_SELECTION(user_id, video_game_id, selection) VALUES(?,?,?)", [body.user_id, body.video_game_id, body.selection])
+  .then(data => {
+    console.log(data)
+    res.status(200).json(data)
+  })
+  .catch(err => {
+    console.log(err)
+    res.status(400).json({ error: 'Error with API request' })
+  })
+}
+
+export { getData, insertUser, getGames, insertSelection }
