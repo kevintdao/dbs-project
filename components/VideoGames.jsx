@@ -2,7 +2,7 @@ import React from 'react'
 
 export default function VideoGames ({ data }) {
   const styles = {
-    container: 'rounded overflow-hidden shadow-lg',
+    container: 'rounded overflow-hidden shadow-md border border-gray-300',
   }
 
   return (
