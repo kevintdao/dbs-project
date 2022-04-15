@@ -33,7 +33,10 @@ export default function Home() {
     if(res.ok){
       router.push({
         pathname: '/games',
-        query: { number: e.target.number.value }
+        query: {
+          user: result.insertId,
+          number: e.target.number.value
+        }
       }, '/games')
     } else{
       setError(result.error)

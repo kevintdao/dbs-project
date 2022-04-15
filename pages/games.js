@@ -5,7 +5,8 @@ import { ThumbUpIcon, ThumbDownIcon, HeartIcon, ChevronDoubleRightIcon } from '@
 
 export default function games() {
   const router = useRouter()
-  const number = router.query?.number
+  const number = router.query?.number || 10
+  const userId = router.query?.user
   const [data, setData] = useState(null)
   const [index, setIndex] = useState(0)
   const [choice, setChoice] = useState()
@@ -40,7 +41,7 @@ export default function games() {
 
     setError('')
     const formData = {
-      user_id: 2,
+      user_id: userId,
       video_game_id: data[index].id,
       selection: choice
     }
@@ -75,7 +76,7 @@ export default function games() {
 
   return (
     <form className={styles.form} onSubmit={onSubmit}>
-      <div>{index + 1}/{number}</div>
+      <div className='text-right'>{index + 1}/{number}</div>
       <VideoGames data={data[index]} index={index}/>
       <div className='grid md:grid-cols-4 gap-4 grid-cols-2'>
         {choices.map((item, i) => (

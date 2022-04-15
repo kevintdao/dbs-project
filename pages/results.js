@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default function result() {
+export default function results() {
   return (
     <div>result</div>
   )
