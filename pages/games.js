@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from 'react'
+import { useRouter } from 'next/router'
 import VideoGames from '../components/VideoGames'
 import { ThumbUpIcon, ThumbDownIcon, HeartIcon, ChevronDoubleRightIcon } from '@heroicons/react/solid'
 
 export default function games() {
+  const router = useRouter()
+  const number = router.query?.number
   const [data, setData] = useState(null)
   const [index, setIndex] = useState(0)
   const [choice, setChoice] = useState()
@@ -24,7 +27,7 @@ export default function games() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const res = await fetch('/api/games')
+      const res = await fetch(`/api/games?number=${number}`)
       const data = await res.json()
       setData(data)
     }
@@ -65,8 +68,14 @@ export default function games() {
 
   if(!data) return <p>Loading...</p>
 
+  if(index == number - 1) {
+    router.push('/result')
+    return 
+  }
+
   return (
     <form className={styles.form} onSubmit={onSubmit}>
+      <div>{index + 1}/{number}</div>
       <VideoGames data={data[index]} index={index}/>
       <div className='grid md:grid-cols-4 gap-4 grid-cols-2'>
         {choices.map((item, i) => (
@@ -78,7 +87,6 @@ export default function games() {
                 {item.icon}
               </div>
             </label>
-
           </div>
         ))}
       </div>

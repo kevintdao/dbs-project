@@ -19,7 +19,8 @@ export default function Home() {
     setError('')
     const data = {
       name: e.target.name.value,
-      age: e.target.age.value
+      age: e.target.age.value,
+      number: e.target.number.value
     }
 
     const res = await fetch('/api/add_user', {
@@ -30,7 +31,10 @@ export default function Home() {
     const result = await res.json()
     
     if(res.ok){
-      router.push('/video_games')
+      router.push({
+        pathname: '/games',
+        query: { number: e.target.number.value }
+      }, '/games')
     } else{
       setError(result.error)
     }
@@ -49,6 +53,11 @@ export default function Home() {
           <div className={styles.input_container}>
             <label htmlFor="age">Age</label>
             <input type="number" name="age" id="age" className={styles.input} required/>
+          </div>
+
+          <div className={styles.input_container}>
+            <label htmlFor="number">Number of Games</label>
+            <input type="number" name="number" id="number" className={styles.input} required/>
           </div>
         </div>
         <input className={styles.button} type="submit" value="Submit" />
