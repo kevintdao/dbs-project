@@ -36,4 +36,14 @@ const insertSelection = async (req, res) => {
   })
 }
 
-export { getData, insertUser, getGames, insertSelection }
+const normalizeDevelopers = async (req, res) => {
+  let data = await executeQuery("select developers from mytable where developers is not null", [])
+
+  data.map((item, i) => {
+    const developers = item.developers.split(',')
+    console.log(developers)
+  })
+  res.send(data)
+}
+
+export { getData, insertUser, getGames, insertSelection, normalizeDevelopers }
