@@ -1,5 +1,8 @@
+<<<<<<< HEAD
 CREATE DATABASE  IF NOT EXISTS `video_games` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
 USE `video_games`;
+=======
+>>>>>>> main
 -- MySQL dump 10.13  Distrib 8.0.28, for macos11 (x86_64)
 --
 -- Host: localhost    Database: video_games
@@ -26,6 +29,7 @@ DROP TABLE IF EXISTS `developer`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `developer` (
   `id` int NOT NULL AUTO_INCREMENT,
+<<<<<<< HEAD
   `name` varchar(128) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1744 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -42,6 +46,14 @@ INSERT INTO `developer` VALUES (1,'Ubisoft Bucharest'),(2,'Spiderweb Software'),
 UNLOCK TABLES;
 
 --
+=======
+  `name` varchar(200) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1797 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+>>>>>>> main
 -- Table structure for table `genre`
 --
 
@@ -50,6 +62,7 @@ DROP TABLE IF EXISTS `genre`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `genre` (
   `id` int NOT NULL AUTO_INCREMENT,
+<<<<<<< HEAD
   `name` varchar(128) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -66,6 +79,14 @@ INSERT INTO `genre` VALUES (1,'Arcade'),(2,'Simulator'),(3,'Strategy'),(4,'Role-
 UNLOCK TABLES;
 
 --
+=======
+  `name` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=453 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+>>>>>>> main
 -- Table structure for table `mytable`
 --
 
@@ -84,6 +105,7 @@ CREATE TABLE `mytable` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+<<<<<<< HEAD
 -- Dumping data for table `mytable`
 --
 
@@ -94,6 +116,8 @@ INSERT INTO `mytable` VALUES (1,'Blazing Angels 2: Secret Missions of WWII','200
 UNLOCK TABLES;
 
 --
+=======
+>>>>>>> main
 -- Table structure for table `publisher`
 --
 
@@ -102,6 +126,7 @@ DROP TABLE IF EXISTS `publisher`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `publisher` (
   `id` int NOT NULL AUTO_INCREMENT,
+<<<<<<< HEAD
   `name` varchar(128) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1143 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -147,6 +172,14 @@ LOCK TABLES `suggested_game` WRITE;
 UNLOCK TABLES;
 
 --
+=======
+  `name` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1191 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+>>>>>>> main
 -- Table structure for table `user`
 --
 
@@ -155,13 +188,19 @@ DROP TABLE IF EXISTS `user`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `user` (
   `id` int NOT NULL AUTO_INCREMENT,
+<<<<<<< HEAD
   `age` int NOT NULL,
   `name` varchar(64) NOT NULL,
+=======
+  `name` int NOT NULL,
+  `age` varchar(45) NOT NULL,
+>>>>>>> main
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+<<<<<<< HEAD
 -- Dumping data for table `user`
 --
 
@@ -171,6 +210,8 @@ LOCK TABLES `user` WRITE;
 UNLOCK TABLES;
 
 --
+=======
+>>>>>>> main
 -- Table structure for table `user_selection`
 --
 
@@ -181,16 +222,23 @@ CREATE TABLE `user_selection` (
   `id` int NOT NULL AUTO_INCREMENT,
   `user_id` int NOT NULL,
   `video_game_id` int NOT NULL,
+<<<<<<< HEAD
   `selection` varchar(12) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_user_selection_user_id` (`user_id`),
   KEY `fk_user_selection_video_game_id` (`video_game_id`),
   CONSTRAINT `fk_user_selection_user_id` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`),
   CONSTRAINT `fk_user_selection_video_game_id` FOREIGN KEY (`video_game_id`) REFERENCES `video_game` (`id`)
+=======
+  PRIMARY KEY (`id`),
+  CONSTRAINT `user_id` FOREIGN KEY (`id`) REFERENCES `user` (`id`),
+  CONSTRAINT `video_game_id` FOREIGN KEY (`id`) REFERENCES `video_game` (`id`)
+>>>>>>> main
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+<<<<<<< HEAD
 -- Dumping data for table `user_selection`
 --
 
@@ -200,6 +248,8 @@ LOCK TABLES `user_selection` WRITE;
 UNLOCK TABLES;
 
 --
+=======
+>>>>>>> main
 -- Table structure for table `video_game`
 --
 
@@ -208,6 +258,7 @@ DROP TABLE IF EXISTS `video_game`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `video_game` (
   `id` int NOT NULL AUTO_INCREMENT,
+<<<<<<< HEAD
   `title` varchar(77) NOT NULL,
   `released` varchar(4) NOT NULL,
   PRIMARY KEY (`id`)
@@ -261,6 +312,22 @@ UNLOCK TABLES;
 --
 -- Dumping routines for database 'video_games'
 --
+=======
+  `title` varchar(200) DEFAULT NULL,
+  `released` varchar(45) DEFAULT NULL,
+  `developer_id` int DEFAULT NULL,
+  `publisher_id` int DEFAULT NULL,
+  `genre_id` int DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `genre_id_idx` (`genre_id`),
+  KEY `developer_id_idx` (`developer_id`),
+  KEY `publisher_id_idx` (`publisher_id`),
+  CONSTRAINT `developer_id` FOREIGN KEY (`developer_id`) REFERENCES `developer` (`id`),
+  CONSTRAINT `genre_id` FOREIGN KEY (`genre_id`) REFERENCES `genre` (`id`),
+  CONSTRAINT `publisher_id` FOREIGN KEY (`publisher_id`) REFERENCES `publisher` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+>>>>>>> main
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -271,4 +338,8 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
+<<<<<<< HEAD
 -- Dump completed on 2022-04-17 20:35:51
+=======
+-- Dump completed on 2022-04-06 16:32:33
+>>>>>>> main
