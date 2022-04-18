@@ -20,7 +20,6 @@ async function executeQuery(query, values) {
     try {
       pool.query(query, values, (err, data) => {
         if (err) {
-          console.log("error executing the query")
           reject(err)
         }
         resolve(data)
