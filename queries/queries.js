@@ -37,13 +37,57 @@ const insertSelection = async (req, res) => {
 }
 
 const normalizeDevelopers = async (req, res) => {
-  let data = await executeQuery("select developers from mytable where developers is not null", [])
+  let data = await executeQuery("select developers from mytable", [])
 
+  let developers = []
   data.map((item, i) => {
-    const developers = item.developers.split(',')
-    console.log(developers)
+    const current = item.developers.split(',')
+    current.map((dev) => {
+      dev = dev.trim()
+      if(!developers.includes(dev)) developers.push(dev)
+    })
   })
-  res.send(data)
+  console.log(developers)
+  res.send(developers)
 }
 
-export { getData, insertUser, getGames, insertSelection, normalizeDevelopers }
+const normalizePublishers = async (req, res) => {
+  let data = await executeQuery("select publishers from mytable", [])
+
+  let publishers = []
+  data.map((item, i) => {
+    const current = item.publishers.split(/[,/]/)
+    current.map((pub) => {
+      pub = pub.trim()
+      if(!publishers.includes(pub)) publishers.push(pub)
+    })
+  })
+  console.log(publishers)
+  res.send(publishers)
+}
+
+const normalizeGenres = async (req, res) => {
+  let data = await executeQuery("select genres from mytable", [])
+
+  let genres = []
+  data.map((item, i) => {
+    const current = item.genres.split(',')
+    current.map((gen) => {
+      gen = gen.trim()
+      if(!genres.includes(gen)) genres.push(gen)
+    })
+  })
+
+  genres.map(item => {
+    executeQuery("INSERT INTO GENRE(name) VALUES(?)", [item])
+    .then(data => {
+      console.log(data)
+    })
+    .catch(err => {
+      console.log(err)
+    })
+  })
+  res.send(genres)
+}
+
+export { getData, insertUser, getGames, insertSelection, normalizeDevelopers, normalizePublishers, normalizeGenres }

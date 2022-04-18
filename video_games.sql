@@ -51,7 +51,7 @@ CREATE TABLE `genre` (
   `id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(128) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -60,7 +60,7 @@ CREATE TABLE `genre` (
 
 LOCK TABLES `genre` WRITE;
 /*!40000 ALTER TABLE `genre` DISABLE KEYS */;
-INSERT INTO `genre` VALUES (1,'Adventure'),(2,'Arcade'),(3,'“Hack and slash/beat em up”'),(4,'Indie'),(5,'MOBA'),(6,'Music'),(7,'Pinball'),(8,'Platform'),(9,'Point-and-click'),(10,'Puzzle'),(11,'Quiz/Trivia'),(12,'Racing'),(13,'Real time strategy(RTS)'),(14,'Role-playing (RPG)'),(15,'Shooter'),(16,'Simulator'),(17,'Sport'),(18,'Strategy'),(19,'Tactical'),(20,'Turn-based strategy (TBS)'),(21,'Visual Novel');
+INSERT INTO `genre` VALUES (1,'Arcade'),(2,'Simulator'),(3,'Strategy'),(4,'Role-playing (RPG)'),(5,'Turn-based strategy (TBS)'),(6,'Puzzle'),(7,'Indie'),(8,'Adventure'),(9,'\"Hack and slash/Beat em up\"'),(10,'Shooter'),(11,'Real Time Strategy (RTS)'),(12,'Sport'),(13,'Platform'),(14,'Visual Novel'),(15,'Fighting'),(16,'Tactical'),(17,'Music'),(18,'Point-and-click'),(19,'Racing'),(20,'Card & Board Game'),(21,'Quiz/Trivia'),(22,'Pinball'),(23,'MOBA');
 /*!40000 ALTER TABLE `genre` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -268,4 +268,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-04-17 16:27:41
+-- Dump completed on 2022-04-17 20:02:59
