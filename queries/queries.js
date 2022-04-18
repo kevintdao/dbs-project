@@ -124,4 +124,86 @@ const normalizeGames = async (req, res) => {
   res.send(data)
 }
 
-export { getData, insertUser, getGames, insertSelection, normalizeDevelopers, normalizePublishers, normalizeGenres, normalizeGames }
+const normalize = async (req, res) => {
+  let data = await executeQuery("select * from mytable", [])
+  let games = await executeQuery("select * from video_game", [])
+  let developers = await executeQuery("select * from developer", [])
+  let publishers = await executeQuery("select * from publisher", [])
+  let genres = await executeQuery("select * from genre", [])
+
+  let developersObject = {}
+  let publishersObject = {}
+  let genresObject = {}
+
+  // save developers as key value pair with key = id and value = name
+  developers.map((item, i) => {
+    developersObject[item.name] = item.id
+  })
+
+  // save publishers as key value pair with key = id and value = name
+  publishers.map((item, i) => {
+    publishersObject[item.name] = item.id
+  })
+
+  // save publishers as key value pair with key = id and value = name
+  genres.map((item, i) => {
+    genresObject[item.name] = item.id
+  })
+
+  console.log(genresObject)
+
+  let output = {}
+  data.map((game, dataId) => {
+    const dev = game.developers.split(',').map(i => i.trim())
+    const pub = game.publishers.split(/[,/]/).map(i => i.trim())
+    const gen = game.genres.split(',').map(i => i.trim())
+
+    // change array of names to its corresponding ids
+    let currDev = dev.map(item => developersObject[item])
+    let currPub = pub.map(item => publishersObject[item])
+    let currGen = gen.map(item => genresObject[item])
+
+    output[dataId] = {
+      developers: currDev,
+      publishers: currPub,
+      genres: currGen
+    }
+
+  })
+
+  for(const [key, value] of Object.entries(output)) {
+    value.developers.map((dev) => {
+      value.publishers.map((pub) => {
+        value.genres.map((gen) => {
+          executeQuery("INSERT INTO VIDEO_GAME_INFO(video_game_id, developer_id, publisher_id, genre_id) VALUES(?,?,?,?)", [key, dev, pub, gen])
+          .then(data => {
+            console.log(data)
+          })
+          .catch(err => {
+            console.log(err)
+          })
+          // console.log(`ID: ${key}, Dev: ${dev}, Pub: ${pub}, Gen: ${gen}`)
+        })
+      })
+    })
+  }
+
+  res.send(data)
+}
+
+const test = async (req, res) => {
+  res.send('test')
+}
+
+export { 
+  getData, 
+  insertUser, 
+  getGames, 
+  insertSelection, 
+  normalizeDevelopers, 
+  normalizePublishers, 
+  normalizeGenres, 
+  normalizeGames, 
+  normalize,
+  test
+}
