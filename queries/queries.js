@@ -108,4 +108,20 @@ const normalizeGenres = async (req, res) => {
   res.send(genres)
 }
 
-export { getData, insertUser, getGames, insertSelection, normalizeDevelopers, normalizePublishers, normalizeGenres }
+const normalizeGames = async (req, res) => {
+  let data = await executeQuery("select titles, released from mytable", [])
+
+  data.map(item => {
+    executeQuery("INSERT INTO VIDEO_GAME(title, released) VALUES(?, ?)", [item.titles, item.released])
+    .then(data => {
+      console.log(data)
+    })
+    .catch(err => {
+      console.log(err)
+    })
+  })
+
+  res.send(data)
+}
+
+export { getData, insertUser, getGames, insertSelection, normalizeDevelopers, normalizePublishers, normalizeGenres, normalizeGames }

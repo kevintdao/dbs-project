@@ -1,7 +1,7 @@
 import nc from 'next-connect'
-import { normalizeGenres, normalizePublishers, normalizeDevelopers } from '../../queries/queries'
+import { normalizeGenres, normalizePublishers, normalizeDevelopers, normalizeGames } from '../../queries/queries'
 
 const handler = nc()
-handler.get(normalizeDevelopers)
+handler.get(normalizeGames)
 
 export default handler
