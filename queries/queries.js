@@ -19,7 +19,14 @@ const insertUser = async (req, res) => {
 }
 
 const getGames = async (req, res) => {
-  let data = await executeQuery("SELECT * from mytable ORDER BY RAND() LIMIT ?", [parseInt(req.query.number)])
+  const sql = `SELECT vg.title, vg.release, vg. from video_game AS vg 
+  JOIN video_game_info AS vgi ON vgi.video_game_id = vg.id 
+  JOIN genre AS g ON g.id = vgi.genre_id 
+  JOIN publisher AS p ON p.id = vgi.publisher_id 
+  JOIN developer AS d ON d.id = vgi.developer_id 
+  ORDER BY RAND() LIMIT ?`
+
+  let data = await executeQuery(sql, [parseInt(req.query.number)])
   res.send(data)
 }
 
@@ -36,6 +43,7 @@ const insertSelection = async (req, res) => {
   })
 }
 
+// start normalize functions
 const normalizeDevelopers = async (req, res) => {
   let data = await executeQuery("select developers from mytable", [])
 
@@ -190,6 +198,7 @@ const normalize = async (req, res) => {
 
   res.send(data)
 }
+// end normalize function
 
 const test = async (req, res) => {
   res.send('test')
