@@ -47,7 +47,16 @@ const normalizeDevelopers = async (req, res) => {
       if(!developers.includes(dev)) developers.push(dev)
     })
   })
-  console.log(developers)
+
+  developers.map(item => {
+    executeQuery("INSERT INTO DEVELOPER(name) VALUES(?)", [item])
+    .then(data => {
+      console.log(data)
+    })
+    .catch(err => {
+      console.log(err)
+    })
+  })
   res.send(developers)
 }
 
@@ -59,10 +68,19 @@ const normalizePublishers = async (req, res) => {
     const current = item.publishers.split(/[,/]/)
     current.map((pub) => {
       pub = pub.trim()
-      if(!publishers.includes(pub)) publishers.push(pub)
+      if(!publishers.includes(pub) && pub != "") publishers.push(pub)
     })
   })
-  console.log(publishers)
+  
+  publishers.map(item => {
+    executeQuery("INSERT INTO PUBLISHER(name) VALUES(?)", [item])
+    .then(data => {
+      console.log(data)
+    })
+    .catch(err => {
+      console.log(err)
+    })
+  })
   res.send(publishers)
 }
 
