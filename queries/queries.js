@@ -19,15 +19,49 @@ const insertUser = async (req, res) => {
 }
 
 const getGames = async (req, res) => {
-  const sql = `SELECT vg.title, vg.release, vg. from video_game AS vg 
-  JOIN video_game_info AS vgi ON vgi.video_game_id = vg.id 
-  JOIN genre AS g ON g.id = vgi.genre_id 
-  JOIN publisher AS p ON p.id = vgi.publisher_id 
-  JOIN developer AS d ON d.id = vgi.developer_id 
-  ORDER BY RAND() LIMIT ?`
+  const sql = `
+  SELECT DISTINCT(vg.id), vg.title, vg.released, d.name AS developer, p.name AS publisher, g.name AS genre
+  FROM video_game_info AS vgi
+  JOIN video_game AS vg ON vg.id = vgi.video_game_id
+  JOIN developer AS d ON d.id = vgi.developer_id
+  JOIN publisher AS p ON p.id = vgi.publisher_id
+  JOIN genre AS g ON g.id = vgi.genre_id
+  WHERE vgi.video_game_id IN (
+    SELECT * FROM (SELECT id FROM video_game ORDER BY RAND() LIMIT ?) as v
+  )
+  ORDER BY vg.id;
+  `
 
-  let data = await executeQuery(sql, [parseInt(req.query.number)])
-  res.send(data)
+  let games = await executeQuery(sql, [parseInt(req.query.number)])
+
+  let ids = []
+  games.map((game, i) => {
+    if(!ids.includes(game.id)) ids.push(game.id)
+  })
+
+  let output = []
+  ids.map((id, i) => {
+    output.push({
+      id: id,
+      developers: [],
+      publishers: [],
+      genres: []
+    })
+  })
+
+  ids.map((id, i) => {
+    games.map((game, j) => {
+      if(game.id == id) {
+        output[i].title = game.title
+        output[i].released = game.released
+        if (!output[i].developers.includes(game.developer)) output[i].developers.push(game.developer)
+        if (!output[i].publishers.includes(game.publisher)) output[i].publishers.push(game.publisher)
+        if (!output[i].genres.includes(game.genre)) output[i].genres.push(game.genre)
+      }
+    })
+  })
+
+  res.send(output)
 }
 
 const insertSelection = async (req, res) => {
