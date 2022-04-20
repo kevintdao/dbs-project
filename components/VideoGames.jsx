@@ -10,8 +10,9 @@ export default function VideoGames ({ data }) {
       <div className='px-6 py-4'>
         <div className='font-bold text-xl mb-2'>{data.title}</div>
         <p className='text-gray-700 text-base'>{`Released: ${data.released}`}</p>
-        <p className='text-gray-700 text-base'>{`Developer: ${data.developers}`}</p>
-        <p className='text-gray-700 text-base'>{`Genres: ${data.genres}`}</p>
+        <p className='text-gray-700 text-base'>{`Developer: ${data.developers.join(', ')}`}</p>
+        <p className='text-gray-700 text-base'>{`Publisher: ${data.publishers.join(', ')}`}</p>
+        <p className='text-gray-700 text-base'>{`Genres: ${data.genres.join(', ')}`}</p>
       </div>
     </div>
   )

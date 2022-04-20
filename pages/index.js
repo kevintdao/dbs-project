@@ -50,17 +50,18 @@ export default function Home() {
         <div className={styles.grid}>
           <div className={styles.input_container}>
             <label htmlFor="name">Name</label>
-            <input type="text" name="name" id="name" className={styles.input} required/>
+            <input type="text" name="name" id="name" className={styles.input} required />
           </div>
 
           <div className={styles.input_container}>
             <label htmlFor="age">Age</label>
-            <input type="number" name="age" id="age" className={styles.input} required/>
+            <input type="number" name="age" id="age" className={styles.input} required />
           </div>
 
           <div className={styles.input_container}>
             <label htmlFor="number">Number of Games</label>
-            <input type="number" name="number" id="number" className={styles.input} required/>
+            <input type="number" name="number" id="number" className={styles.input} required defaultValue={10} />
+            <p className='text-gray-600 text-xs'>Default: 10</p>
           </div>
         </div>
         <input className={styles.button} type="submit" value="Submit" />
