@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import VideoGames from '../components/VideoGames'
 import { ThumbUpIcon, ThumbDownIcon, HeartIcon, ChevronDoubleRightIcon } from '@heroicons/react/solid'
+import SelectionCount from '../components/SelectionCount'
 
 export default function games() {
   const router = useRouter()
@@ -11,6 +12,7 @@ export default function games() {
   const [index, setIndex] = useState(0)
   const [choice, setChoice] = useState()
   const [error, setError] = useState('')
+  const [selections, setSelections] = useState({ 'Up': 0, 'Down': 0, 'Love': 0, 'Skip': 0 })
 
   const styles = {
     form: "space-y-4 mt-2",
@@ -59,6 +61,7 @@ export default function games() {
       setError(result.error)
     }
     
+    setSelections((prev) => ({...prev, [choice]: prev[choice]+1}))
     setChoice('')
     setIndex(currIndex => currIndex + 1)
   }
@@ -76,7 +79,10 @@ export default function games() {
 
   return (
     <form className={styles.form} onSubmit={onSubmit}>
-      <div className='text-right'>{index + 1}/{number}</div>
+      <div className='flex justify-between'>
+        <SelectionCount selections={selections} />
+        {index + 1}/{number}
+      </div>
       <VideoGames data={data[index]} index={index}/>
       <div className='grid md:grid-cols-4 gap-4 grid-cols-2'>
         {choices.map((item, i) => (
