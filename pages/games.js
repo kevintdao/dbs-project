@@ -72,8 +72,8 @@ export default function games() {
 
   if(!data) return <p>Loading...</p>
 
-  if(index == number - 1) {
-    router.push('/result')
+  if(index == number) {
+    router.push('/results')
     return 
   }
 
