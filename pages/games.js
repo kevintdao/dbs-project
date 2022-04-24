@@ -16,7 +16,7 @@ export default function games() {
 
   const styles = {
     form: "space-y-4 mt-2",
-    button: "bg-blue-600 hover:bg-blue-700 hover:cursor-pointer text-white font-bold py-2 px-4 rounded",
+    button: "disabled:bg-blue-300 disabled:cursor-default bg-blue-600 hover:bg-blue-700 hover:cursor-pointer text-white font-bold py-2 px-4 rounded",
     card_container: "border p-2 rounded text-center shadow-md",
     icon: "h-21 w-21"
   }
@@ -72,8 +72,8 @@ export default function games() {
 
   if(!data) return <p>Loading...</p>
 
-  if(index == number - 1) {
-    router.push('/result')
+  if(index == number) {
+    router.push('/results')
     return 
   }
 
@@ -97,7 +97,7 @@ export default function games() {
           </div>
         ))}
       </div>
-      <input type="submit" value="Next" className={styles.button} />
+      <input type="submit" value="Next" className={styles.button} disabled={!choice} />
     </form>
   )
 }

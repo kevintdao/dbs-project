@@ -18,7 +18,7 @@ export default function SelectionCount({ selections }) {
       <p className='mr-2'>Selections: </p>
       <div className='flex flex-row space-x-4 align-top'>
         {Object.entries(choices).map(([key, value], i) => (
-          <div className='flex flex-row'>
+          <div className='flex flex-row' key={key}>
             {value}
             <p className='h-full'>: {selections[key]}</p>
           </div>
