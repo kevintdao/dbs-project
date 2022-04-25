@@ -80,6 +80,8 @@ export default function games() {
 
   return (
     <form className={styles.form} onSubmit={onSubmit}>
+      <h2 className='font-bold text-3xl'>Games selection</h2>
+
       <div className='flex justify-between'>
         <SelectionCount selections={selections} />
         {index + 1}/{number}
