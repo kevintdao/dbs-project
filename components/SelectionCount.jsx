@@ -7,8 +7,8 @@ export default function SelectionCount({ selections }) {
   }
 
   const choices = {
-    Up: <ThumbUpIcon className={styles.icon} />,
-    Down: <ThumbDownIcon className={styles.icon} />,
+    Like: <ThumbUpIcon className={styles.icon} />,
+    Dislike: <ThumbDownIcon className={styles.icon} />,
     Love: <HeartIcon className={styles.icon} />,
     Skip: <ChevronDoubleRightIcon className={styles.icon} />,
   }
