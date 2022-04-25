@@ -12,7 +12,7 @@ export default function games() {
   const [index, setIndex] = useState(0)
   const [choice, setChoice] = useState()
   const [error, setError] = useState('')
-  const [selections, setSelections] = useState({ 'Up': 0, 'Down': 0, 'Love': 0, 'Skip': 0 })
+  const [selections, setSelections] = useState({ 'Like': 0, 'Dislike': 0, 'Love': 0, 'Skip': 0 })
 
   const styles = {
     form: "space-y-4 mt-2",
@@ -22,8 +22,8 @@ export default function games() {
   }
 
   const choices = [
-    { id: 'up', value: 'Up', text: 'Thumb Up', icon: <ThumbUpIcon className={styles.icon} /> },
-    { id: 'down', value: 'Down', text: 'Thumb Down', icon: <ThumbDownIcon className={styles.icon} /> },
+    { id: 'like', value: 'Like', text: 'Like', icon: <ThumbUpIcon className={styles.icon} /> },
+    { id: 'dislike', value: 'Dislike', text: 'Dislike', icon: <ThumbDownIcon className={styles.icon} /> },
     { id: 'love', value: 'Love', text: 'Love', icon: <HeartIcon className={styles.icon} /> },
     { id: 'skip', value: 'Skip', text: 'Skip', icon: <ChevronDoubleRightIcon className={styles.icon} /> },
   ]
