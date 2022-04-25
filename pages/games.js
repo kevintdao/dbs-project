@@ -3,6 +3,7 @@ import { useRouter } from 'next/router'
 import VideoGames from '../components/VideoGames'
 import { ThumbUpIcon, ThumbDownIcon, HeartIcon, ChevronDoubleRightIcon } from '@heroicons/react/solid'
 import SelectionCount from '../components/SelectionCount'
+import Alert from '../components/Alert'
 
 export default function games() {
   const router = useRouter()
@@ -83,6 +84,9 @@ export default function games() {
         <SelectionCount selections={selections} />
         {index + 1}/{number}
       </div>
+      
+      {error && <Alert title='Error' text={error} />}
+
       <VideoGames data={data[index]} index={index}/>
       <div className='grid md:grid-cols-4 gap-4 grid-cols-2'>
         {choices.map((item, i) => (
