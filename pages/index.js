@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { useRouter } from 'next/router'
 import Alert from '../components/Alert'
+import Header from '../components/Header'
 
 export default function Home() {
   const router = useRouter()
@@ -46,6 +47,7 @@ export default function Home() {
 
   return (
     <div className='space-y-4 mt-2'>
+      <Header title='Video Games Suggestion' />
       <h2 className='font-bold text-3xl'>Video Games Suggestion</h2>
 
       {error && <Alert title='Error' text={error} />}

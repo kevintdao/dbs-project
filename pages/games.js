@@ -4,6 +4,7 @@ import VideoGames from '../components/VideoGames'
 import { ThumbUpIcon, ThumbDownIcon, HeartIcon, ChevronDoubleRightIcon } from '@heroicons/react/solid'
 import SelectionCount from '../components/SelectionCount'
 import Alert from '../components/Alert'
+import Header from '../components/Header'
 
 export default function games() {
   const router = useRouter()
@@ -80,7 +81,8 @@ export default function games() {
 
   return (
     <form className={styles.form} onSubmit={onSubmit}>
-      <h2 className='font-bold text-3xl'>Games selection</h2>
+      <Header title='Video Games Selection' />
+      <h2 className='font-bold text-3xl'>Games Selection</h2>
 
       <div className='flex justify-between'>
         <SelectionCount selections={selections} />
