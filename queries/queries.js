@@ -280,8 +280,15 @@ const normalize = async (req, res) => {
 }
 // end normalize function
 
-const test = async (req, res) => {
-  res.send('test')
+const getResults = async (req, res) => {
+  const id = req.query.id
+  let data = await executeQuery("SELECT * FROM genre_selections WHERE user_id = ?", [id])
+  res.send(data)
+}
+
+const getAllResults = async (req, res) => {
+  let data = await executeQuery("SELECT * FROM genre_selections", [])
+  res.send(data)
 }
 
 export { 
@@ -297,5 +304,6 @@ export {
   normalizeGenres, 
   normalizeGames, 
   normalize,
-  test
+  getResults,
+  getAllResults
 } 
