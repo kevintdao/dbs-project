@@ -1,16 +1,18 @@
 import React, { useState } from 'react'
 import { useRouter } from 'next/router'
+import Alert from '../components/Alert'
+import Header from '../components/Header'
 
 export default function Home() {
   const router = useRouter()
   const [error, setError] = useState('')
 
   const styles = {
-    form: "space-y-4 mt-2",
-    grid: "grid md:grid-cols-2 gap-4 grid-cols-1",
+    form: "space-y-4 mt-2 border p-3 rounded shadow-md",
+    grid: "grid md:grid-cols-3 gap-4 grid-cols-1",
     input_container: "flex flex-col space-y-2",
     input: "p-2 border border-gray-300 rounded",
-    button: "bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+    button: "bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded cursor-pointer"
   }
 
   const onSubmit = async (e) => {
@@ -45,8 +47,13 @@ export default function Home() {
 
   return (
     <div className='space-y-4 mt-2'>
-      <h2 className='font-bold'>Homepage</h2>
+      <Header title='Video Games Suggestion' />
+      <h2 className='font-bold text-3xl'>Video Games Suggestion</h2>
+
+      {error && <Alert title='Error' text={error} />}
+
       <form onSubmit={onSubmit} className={styles.form}>
+        <h5 className='font-bold text-xl'>Enter your information</h5>
         <div className={styles.grid}>
           <div className={styles.input_container}>
             <label htmlFor="name">Name</label>
