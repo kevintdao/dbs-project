@@ -287,7 +287,7 @@ const getResults = async (req, res) => {
 }
 
 const getAllResults = async (req, res) => {
-  let data = await executeQuery("SELECT * FROM genre_selections", [])
+  let data = await executeQuery("SELECT genre, SUM(nlove), SUM(nlike), SUM(ndislike), SUM(score) FROM video_games.genre_selections GROUP BY genre;", [])
   res.send(data)
 }
 
