@@ -77,6 +77,46 @@ const insertSelection = async (req, res) => {
   })
 }
 
+// update genre_selections table based on user selections
+const update_genre_selections_love = async (req, res) => {
+  const body = JSON.parse(req.body)
+  executeQuery("UPDATE genre_selections SET nlove = nlove + 1 WHERE user_id = ? AND genre = ?", [body.user_id, body.genre])
+  .then(data => {
+    console.log(data)
+    res.status(200).json(data)
+  })
+  .catch(err => {
+    console.log(err)
+    res.status(400).json({ error: 'Error with API request' })
+  })
+}
+
+const update_genre_selections_like = async (req, res) => {
+  const body = JSON.parse(req.body)
+  executeQuery("UPDATE genre_selections SET nlike = nlike + 1 WHERE user_id = ? AND genre = ?", [body.user_id, body.genre])
+  .then(data => {
+    console.log(data)
+    res.status(200).json(data)
+  })
+  .catch(err => {
+    console.log(err)
+    res.status(400).json({ error: 'Error with API request' })
+  })
+}
+
+const update_genre_selections_dislike = async (req, res) => {
+  const body = JSON.parse(req.body)
+  executeQuery("UPDATE genre_selections SET ndislike = ndislike + 1 WHERE user_id = ? AND genre = ?", [body.user_id, body.genre])
+  .then(data => {
+    console.log(data)
+    res.status(200).json(data)
+  })
+  .catch(err => {
+    console.log(err)
+    res.status(400).json({ error: 'Error with API request' })
+  })
+}
+
 // start normalize functions
 const normalizeDevelopers = async (req, res) => {
   let data = await executeQuery("select developers from mytable", [])
@@ -243,6 +283,9 @@ export {
   insertUser, 
   getGames, 
   insertSelection, 
+  update_genre_selections_dislike,
+  update_genre_selections_love,
+  update_genre_selections_like, 
   normalizeDevelopers, 
   normalizePublishers, 
   normalizeGenres, 
