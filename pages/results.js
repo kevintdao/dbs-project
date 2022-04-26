@@ -30,7 +30,7 @@ export default function results() {
     <div className='space-y-4 mt-2'>
       <Results />
 
-      <AllResults />
+      <AllResults data={data.all} />
     </div>
   )
 }
