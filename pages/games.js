@@ -65,38 +65,39 @@ export default function games() {
 
     // update genre selections
     // for each genre of this game, update genre_selections accordingly
-    for (let i = 0; i < data[index].genres; i++) {
-      userGenreData = {
+    let res2
+    for (let i = 0; i < data[index].genres.length; i++) {
+      const userGenreData = {
         user_id: userId,
         genre: data[index].genres[i]
       }
       if (choice == 'Like') {
-        const res2 = await fetch('/api/update_genre_selections_like', {
+        res2 = await fetch('/api/update_genre_selections_like', {
           method: 'POST',
           body: JSON.stringify(userGenreData)
         })
       }
       else if (choice == 'Dislike') {
-        const res2 = await fetch('/api/update_genre_selections_dislike', {
+        res2 = await fetch('/api/update_genre_selections_dislike', {
           method: 'POST',
           body: JSON.stringify(userGenreData)
         })
       }
       else if (choice == 'Love') {
-        const res2 = await fetch('/api/update_genre_selections_love', {
+        res2 = await fetch('/api/update_genre_selections_love', {
           method: 'POST',
           body: JSON.stringify(userGenreData)
         })
       }
     }
     
-    const result2 = await res2.json()
+    // const result2 = await res2.json()
     
-    if(res2.ok){
-      console.log(res2)
-    } else{
-      setError(result2.error)
-    }
+    // if(res2.ok){
+    //   console.log(res2)
+    // } else{
+    //   setError(result2.error)
+    // }
     
     setSelections((prev) => ({...prev, [choice]: prev[choice]+1}))
     setChoice('')
