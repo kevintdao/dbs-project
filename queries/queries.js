@@ -292,4 +292,4 @@ export {
   normalizeGames, 
   normalize,
   test
-}
+} 
