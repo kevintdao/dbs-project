@@ -78,7 +78,8 @@ CREATE TABLE `genre_selections` (
   `nlike` int NOT NULL DEFAULT '0',
   `ndislike` int NOT NULL DEFAULT '0',
   `score` int GENERATED ALWAYS AS ((((3 * `nlove`) + (1.5 * `nlike`)) - (1.2 * `ndislike`))) VIRTUAL,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `user_genre` (`user_id`,`genre`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -300,4 +301,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-04-26 15:18:35
+-- Dump completed on 2022-04-26 15:54:41
