@@ -62,6 +62,42 @@ export default function games() {
     } else{
       setError(result.error)
     }
+
+    // update genre selections
+    // for each genre of this game, update genre_selections accordingly
+    let res2
+    for (let i = 0; i < data[index].genres.length; i++) {
+      const userGenreData = {
+        user_id: userId,
+        genre: data[index].genres[i]
+      }
+      if (choice == 'Like') {
+        res2 = await fetch('/api/update_genre_selections_like', {
+          method: 'POST',
+          body: JSON.stringify(userGenreData)
+        })
+      }
+      else if (choice == 'Dislike') {
+        res2 = await fetch('/api/update_genre_selections_dislike', {
+          method: 'POST',
+          body: JSON.stringify(userGenreData)
+        })
+      }
+      else if (choice == 'Love') {
+        res2 = await fetch('/api/update_genre_selections_love', {
+          method: 'POST',
+          body: JSON.stringify(userGenreData)
+        })
+      }
+    }
+    
+    // const result2 = await res2.json()
+    
+    // if(res2.ok){
+    //   console.log(res2)
+    // } else{
+    //   setError(result2.error)
+    // }
     
     setSelections((prev) => ({...prev, [choice]: prev[choice]+1}))
     setChoice('')

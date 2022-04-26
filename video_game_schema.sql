@@ -1,5 +1,3 @@
-CREATE DATABASE  IF NOT EXISTS `video_games` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
-USE `video_games`;
 -- MySQL dump 10.13  Distrib 8.0.28, for macos11 (x86_64)
 --
 -- Host: localhost    Database: video_games
@@ -63,6 +61,35 @@ LOCK TABLES `genre` WRITE;
 /*!40000 ALTER TABLE `genre` DISABLE KEYS */;
 INSERT INTO `genre` VALUES (1,'Arcade'),(2,'Simulator'),(3,'Strategy'),(4,'Role-playing (RPG)'),(5,'Turn-based strategy (TBS)'),(6,'Puzzle'),(7,'Indie'),(8,'Adventure'),(9,'\"Hack and slash/Beat em up\"'),(10,'Shooter'),(11,'Real Time Strategy (RTS)'),(12,'Sport'),(13,'Platform'),(14,'Visual Novel'),(15,'Fighting'),(16,'Tactical'),(17,'Music'),(18,'Point-and-click'),(19,'Racing'),(20,'Card & Board Game'),(21,'Quiz/Trivia'),(22,'Pinball'),(23,'MOBA');
 /*!40000 ALTER TABLE `genre` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `genre_selections`
+--
+
+DROP TABLE IF EXISTS `genre_selections`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `genre_selections` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `user_id` int NOT NULL,
+  `genre` varchar(128) NOT NULL,
+  `nlove` int NOT NULL DEFAULT '0',
+  `nlike` int NOT NULL DEFAULT '0',
+  `ndislike` int NOT NULL DEFAULT '0',
+  `score` int GENERATED ALWAYS AS ((((3 * `nlove`) + (1.5 * `nlike`)) - (1.2 * `ndislike`))) VIRTUAL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `user_genre` (`user_id`,`genre`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `genre_selections`
+--
+
+LOCK TABLES `genre_selections` WRITE;
+/*!40000 ALTER TABLE `genre_selections` DISABLE KEYS */;
+/*!40000 ALTER TABLE `genre_selections` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -158,7 +185,7 @@ CREATE TABLE `user` (
   `age` int NOT NULL,
   `name` varchar(64) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -167,6 +194,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
+INSERT INTO `user` VALUES (1,14,'Greg');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -187,7 +215,7 @@ CREATE TABLE `user_selection` (
   KEY `fk_user_selection_video_game_id` (`video_game_id`),
   CONSTRAINT `fk_user_selection_user_id` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`),
   CONSTRAINT `fk_user_selection_video_game_id` FOREIGN KEY (`video_game_id`) REFERENCES `video_game` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -196,6 +224,7 @@ CREATE TABLE `user_selection` (
 
 LOCK TABLES `user_selection` WRITE;
 /*!40000 ALTER TABLE `user_selection` DISABLE KEYS */;
+INSERT INTO `user_selection` VALUES (1,1,1,'like'),(2,1,2,'dislike'),(3,1,3,'dislike'),(4,1,4,'love'),(5,1,5,'love'),(6,1,6,'dislike'),(7,1,7,'like'),(8,1,8,'dislike'),(9,1,9,'love'),(10,1,10,'love');
 /*!40000 ALTER TABLE `user_selection` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -272,4 +301,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-04-19 14:11:23
+-- Dump completed on 2022-04-26 15:54:41
