@@ -28,9 +28,15 @@ export default function results() {
 
   return (
     <div className='space-y-4 mt-2'>
-      <Results />
+      <div>
+        <h4 className='font-bold text-xl'>User Results</h4>
+        <Results data={data.result} />
+      </div>
 
-      <AllResults data={data.all} />
+      <div>
+        <h4 className='font-bold text-xl'>All Results</h4>
+        <AllResults data={data.all} />
+      </div>
     </div>
   )
 }

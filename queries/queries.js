@@ -282,7 +282,7 @@ const normalize = async (req, res) => {
 
 const getResults = async (req, res) => {
   const id = req.query.id
-  let data = await executeQuery("SELECT * FROM genre_selections WHERE user_id = ?", [id])
+  let data = await executeQuery("SELECT * FROM genre_selections WHERE user_id = ? ORDER BY score DESC", [id])
   res.send(data)
 }
 
