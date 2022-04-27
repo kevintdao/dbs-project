@@ -10,7 +10,9 @@ export default function results() {
       let res = await fetch(`/api/all_results`)
       const allResults = await res.json()
 
-      res = await fetch(`/api/results?id=2`)
+      let userId = localStorage.getItem('user')
+
+      res = await fetch(`/api/results?id=${userId}`)
       const result = await res.json()
 
       setData({
@@ -32,6 +34,8 @@ export default function results() {
         <h4 className='font-bold text-xl'>User Results</h4>
         <Results data={data.result} />
       </div>
+
+      <hr />
 
       <div>
         <h4 className='font-bold text-xl'>All Results</h4>
