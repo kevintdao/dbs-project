@@ -280,8 +280,15 @@ const normalize = async (req, res) => {
 }
 // end normalize function
 
-const test = async (req, res) => {
-  res.send('test')
+const getResults = async (req, res) => {
+  const id = req.query.id
+  let data = await executeQuery("SELECT genre, nlove, nlike, ndislike, ROUND(score,2) AS score FROM genre_selections WHERE user_id = ? ORDER BY score DESC", [id])
+  res.send(data)
+}
+
+const getAllResults = async (req, res) => {
+  let data = await executeQuery("SELECT genre, SUM(nlove) AS loves, SUM(nlike) AS likes, SUM(ndislike) AS dislikes, ROUND(SUM(score),2) AS scores FROM video_games.genre_selections GROUP BY genre ORDER BY scores DESC", [])
+  res.send(data)
 }
 
 export { 
@@ -297,5 +304,6 @@ export {
   normalizeGenres, 
   normalizeGames, 
   normalize,
-  test
+  getResults,
+  getAllResults
 } 
