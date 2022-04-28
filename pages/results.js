@@ -66,9 +66,24 @@ export default function results() {
     labels,
     datasets: [
       {
-        label: 'Dataset 1',
+        label: 'Score',
         data: data.result.map(item => item.score),
         backgroundColor: 'rgba(255, 99, 132, 0.5)',
+      },
+      {
+        label: 'Number of Loves',
+        data: data.result.map(item => item.nlove),
+        backgroundColor: 'rgba(53, 162, 235, 0.5)',
+      },
+      {
+        label: 'Number of Likes',
+        data: data.result.map(item => item.nlike),
+        backgroundColor: 'rgba(99, 255, 235, 0.5)',
+      },
+      {
+        label: 'Number of Dislikes',
+        data: data.result.map(item => item.ndislike),
+        backgroundColor: 'rgba(0, 0, 255, 0.5)',
       }
     ]
   }
