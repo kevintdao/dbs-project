@@ -1,9 +1,41 @@
 import React, { useEffect, useState } from 'react'
 import Results from '../components/Results'
 import AllResults from '../components/AllResults'
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend,
+} from 'chart.js'
+import { Bar } from 'react-chartjs-2'
+
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend
+)
 
 export default function results() {
   const [data, setData] = useState()
+
+  const options = {
+    responsive: true,
+    plugins: {
+      legend: {
+        position: 'top',
+      },
+      title: {
+        display: true,
+        text: 'Chart.js Bar Chart',
+      },
+    },
+  }
 
   useEffect(() => {
     const fetchData = async () => {
@@ -26,13 +58,28 @@ export default function results() {
 
   if(!data) return <p>Loading...</p>
 
-  console.log(data)
+  let labels = []
+  const resultLabels = data.result.map(item => labels.push(item.genre))
+  console.log(labels);
+
+  const resultData = {
+    labels,
+    datasets: [
+      {
+        label: 'Dataset 1',
+        data: data.result.map(item => item.score),
+        backgroundColor: 'rgba(255, 99, 132, 0.5)',
+      }
+    ]
+  }
 
   return (
     <div className='space-y-4 mt-2'>
       <div>
         <h4 className='font-bold text-xl'>User Results</h4>
         <Results data={data.result} />
+        
+        <Bar options={options} data={resultData} />
       </div>
 
       <hr />
