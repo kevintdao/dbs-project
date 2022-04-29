@@ -4,6 +4,7 @@ import { Bar } from 'react-chartjs-2'
 export default function AllResultsGraph({ data }) {
   const options = {
     responsive: true,
+    maintainAspectRatio: true,
     plugins: {
       legend: {
         position: 'top',
