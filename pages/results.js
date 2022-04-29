@@ -30,7 +30,7 @@ export default function results() {
   const [data, setData] = useState()
   const [userChoice, setUserChoice] = useState('table')
   const [allChoice, setAllChoice] = useState('table')
-  var userId
+  const [id, setId] = useState()
 
   const styles = {
     radio_button: 'form-radio h-4 w-4 border border-gray-300 focus:outline-none transition duration-200 mt-1 align-top bg-center bg-contain mr-2 cursor-pointer'
@@ -41,7 +41,7 @@ export default function results() {
       let res = await fetch(`/api/all_results`)
       const allResults = await res.json()
 
-      userId = localStorage.getItem('user')
+      let userId = localStorage.getItem('user')
 
       res = await fetch(`/api/results?id=${userId}`)
       const result = await res.json()
@@ -58,6 +58,7 @@ export default function results() {
         percent: percent,
         recommended: recommended
       })
+      setId(userId)
     }
 
     fetchData()
@@ -70,13 +71,13 @@ export default function results() {
       <Header title='Video Games Results' />
 
       <h2 className='font-bold text-3xl'>Results</h2>
-      {userId && <div>
+      {id && <div>
         <h4 className='font-bold text-xl'>Recomendations</h4>
         <RecommendedGames data={data.recommended} />
         <hr />
       </div>}
 
-      {userId && <div>
+      {id && <div>
         <h4 className='font-bold text-xl'>User Results</h4>
         <div className='space-x-4'>
           <label htmlFor="u-table">
