@@ -2,6 +2,13 @@ import React from 'react'
 import { Pie } from 'react-chartjs-2'
 
 export default function ResultsGraph({ data }) {
+  const randomNum = () => Math.floor(Math.random() * (235 - 52 + 1) + 52);
+  const randomRGB = () => `rgba(${randomNum()}, ${randomNum()}, ${randomNum()}, 0.2)`;
+
+  let colors = data.map(item => {
+    return randomRGB()
+  })
+
   const options = {
     responsive: true,
     maintainAspectRatio: false,
@@ -11,7 +18,7 @@ export default function ResultsGraph({ data }) {
       },
       title: {
         display: true,
-        text: 'Likeability Score for All Genres for All Users',
+        text: 'Percentage of Loved Genre',
       },
     },
   }
@@ -23,7 +30,10 @@ export default function ResultsGraph({ data }) {
     datasets: [
       {
         label: 'Percentage of loved genre',
-        data: data.map(item => item.percent)
+        data: data.map(item => item.percent),
+        backgroundColor: colors,
+        borderColor: colors,
+        borderWidth: 1
       }
     ]
   }
