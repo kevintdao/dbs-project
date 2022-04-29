@@ -14,6 +14,7 @@ import Results from '../components/Results'
 import ResultsGraph from '../components/ResultsGraph'
 import AllResults from '../components/AllResults'
 import AllResultsGraph from '../components/AllResultsGraph'
+import RecommendedGames from '../components/RecommendedGames'
 
 ChartJS.register(
   CategoryScale,
@@ -24,11 +25,13 @@ ChartJS.register(
   Tooltip,
   Legend
 )
+ChartJS.defaults.color = '#000'
 
 export default function results() {
   const [data, setData] = useState()
   const [userChoice, setUserChoice] = useState('table')
   const [allChoice, setAllChoice] = useState('table')
+  const [id, setId] = useState()
 
   const styles = {
     radio_button: 'form-radio h-4 w-4 border border-gray-300 focus:outline-none transition duration-200 mt-1 align-top bg-center bg-contain mr-2 cursor-pointer'
@@ -47,11 +50,16 @@ export default function results() {
       res = await fetch(`/api/percent_loved?id=${userId}`)
       const percent = await res.json()
 
+      res = await fetch(`/api/recommended?id=${userId}`)
+      const recommended = await res.json()
+
       setData({
         all: allResults,
         result: result,
-        percent: percent
+        percent: percent,
+        recommended: recommended
       })
+      setId(userId)
     }
 
     fetchData()
@@ -62,7 +70,15 @@ export default function results() {
   return (
     <div className='space-y-4 mt-2'>
       <Header title='Video Games Results' />
-      <div>
+
+      <h2 className='font-bold text-3xl'>Results</h2>
+      {id && <div>
+        <h4 className='font-bold text-xl'>Recomendations</h4>
+        <RecommendedGames data={data.recommended} />
+        <hr />
+      </div>}
+
+      {id && <div>
         <h4 className='font-bold text-xl'>User Results</h4>
         <div className='space-x-4'>
           <label htmlFor="u-table">
@@ -76,9 +92,9 @@ export default function results() {
         </div>
         {userChoice == 'table' && <Results data={data.result} />}
         {userChoice == 'graph' && <ResultsGraph data={data.percent} />}
-      </div>
+        <hr />
+      </div>}
 
-      <hr />
 
       <div>
         <h4 className='font-bold text-xl'>All Results</h4>

@@ -302,6 +302,100 @@ const getPercentLoved = async (req, res) => {
   res.send(data)
 }
 
+const getRecommended = async (req, res) => {
+  const id = req.query.id
+  // check if there's existing recomended games
+  let recommended = await executeQuery(`
+  SELECT DISTINCT(vg.id), vg.title AS title, vg.released AS released, d.name AS developer, p.name AS publisher, g.name AS genre
+  FROM video_game_info AS vgi
+  JOIN video_game AS vg ON vg.id = vgi.video_game_id
+  JOIN developer AS d ON d.id = vgi.developer_id
+  JOIN publisher AS p ON p.id = vgi.publisher_id
+  JOIN genre AS g ON g.id = vgi.genre_id
+  WHERE vgi.video_game_id IN (
+  SELECT video_game_id FROM suggested_game WHERE user_id = ?
+  )
+  ORDER BY vg.id;
+  `, [id])
+
+  if(recommended.length != 0) {
+    let ids = []
+    recommended.map((game, i) => {
+      if(!ids.includes(game.id)) ids.push(game.id)
+    })
+
+    const output = formatGames(ids, recommended)
+    res.send(output)
+  }
+  else{
+    let gamesId = await executeQuery(`
+    SELECT DISTINCT(vgi.video_game_id) FROM video_game_info AS vgi 
+    JOIN genre AS g ON g.id = vgi.genre_id
+    WHERE g.name = (SELECT genre FROM genre_selections WHERE user_id = ? ORDER BY score DESC LIMIT 1)
+    ORDER BY RAND() LIMIT 5;
+    `, [id])
+  
+    gamesId.map(item => {
+      executeQuery("INSERT INTO suggested_game(user_id, video_game_id, position) VALUES(?,?,?)", [id, item.video_game_id, 0])
+      .then(data => {
+        console.log(data)
+      })
+      .catch(err => {
+        console.log(err)
+      })
+    })
+  
+    let games = await executeQuery(`
+    SELECT DISTINCT(vg.id), vg.title AS title, vg.released AS released, d.name AS developer, p.name AS publisher, g.name AS genre
+    FROM video_game_info AS vgi
+    JOIN video_game AS vg ON vg.id = vgi.video_game_id
+    JOIN developer AS d ON d.id = vgi.developer_id
+    JOIN publisher AS p ON p.id = vgi.publisher_id
+    JOIN genre AS g ON g.id = vgi.genre_id
+    WHERE vgi.video_game_id IN (
+      SELECT video_game_id FROM suggested_game WHERE user_id = ?
+    )
+    AND vgi.video_game_id NOT IN ((SELECT video_game_id FROM user_selection WHERE user_id = ?))
+    ORDER BY vg.id;
+    `, [id, id])
+  
+    let ids = []
+    games.map((game, i) => {
+      if(!ids.includes(game.id)) ids.push(game.id)
+    })
+  
+    const output = formatGames(ids, games)
+    
+    res.send(output)
+  }
+}
+
+function formatGames(ids, games) {
+  let output = []
+  ids.map((id, i) => {
+    output.push({
+      id: id,
+      developers: [],
+      publishers: [],
+      genres: []
+    })
+  })
+
+  ids.map((id, i) => {
+    games.map((game, j) => {
+      if(game.id == id) {
+        output[i].title = game.title
+        output[i].released = game.released
+        if (!output[i].developers.includes(game.developer)) output[i].developers.push(game.developer)
+        if (!output[i].publishers.includes(game.publisher)) output[i].publishers.push(game.publisher)
+        if (!output[i].genres.includes(game.genre)) output[i].genres.push(game.genre)
+      }
+    })
+  })
+
+  return output
+}
+
 export { 
   getData, 
   insertUser, 
@@ -317,5 +411,6 @@ export {
   normalize,
   getResults,
   getAllResults,
-  getPercentLoved
+  getPercentLoved,
+  getRecommended
 } 
