@@ -5,6 +5,7 @@ import { ThumbUpIcon, ThumbDownIcon, HeartIcon, ChevronDoubleRightIcon } from '@
 import SelectionCount from '../components/SelectionCount'
 import Alert from '../components/Alert'
 import Header from '../components/Header'
+import Loading from '../components/Loading'
 
 export default function games() {
   const router = useRouter()
@@ -91,14 +92,6 @@ export default function games() {
       }
     }
     
-    // const result2 = await res2.json()
-    
-    // if(res2.ok){
-    //   console.log(res2)
-    // } else{
-    //   setError(result2.error)
-    // }
-    
     setSelections((prev) => ({...prev, [choice]: prev[choice]+1}))
     setChoice('')
     setIndex(currIndex => currIndex + 1)
@@ -108,7 +101,7 @@ export default function games() {
     setChoice(e.target.value)
   }
 
-  if(!data) return <p>Loading...</p>
+  if(!data) return <Loading />
 
   if(index == number) {
     router.push('/results')
