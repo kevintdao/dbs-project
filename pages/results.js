@@ -9,6 +9,7 @@ import {
   Legend,
   ArcElement
 } from 'chart.js'
+import Header from '../components/Header'
 import Results from '../components/Results'
 import ResultsGraph from '../components/ResultsGraph'
 import AllResults from '../components/AllResults'
@@ -54,6 +55,7 @@ export default function results() {
 
   return (
     <div className='space-y-4 mt-2'>
+      <Header title='Video Games Results' />
       <div>
         <h4 className='font-bold text-xl'>User Results</h4>
         <Results data={data.result} />
