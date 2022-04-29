@@ -15,6 +15,7 @@ import ResultsGraph from '../components/ResultsGraph'
 import AllResults from '../components/AllResults'
 import AllResultsGraph from '../components/AllResultsGraph'
 import RecommendedGames from '../components/RecommendedGames'
+import Loading from '../components/Loading'
 
 ChartJS.register(
   CategoryScale,
@@ -65,7 +66,7 @@ export default function results() {
     fetchData()
   }, [])
 
-  if(!data) return <p>Loading...</p>
+  if(!data) return <Loading />
 
   return (
     <div className='space-y-4 mt-2'>
