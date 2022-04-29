@@ -29,8 +29,8 @@ export default function RecommendedGames({ data }) {
               <tr key={i}>
                 <td className={styles.cell} id={`title-${i}`}>{item.title}</td>
                 <td className={styles.cell} id={`released-${i}`}>{item.released}</td>
-                <td className={styles.cell} id={`developer-${i}`}>{item.developers}</td>
-                <td className={styles.cell} id={`publisher-${i}`}>{item.publishers}</td>
+                <td className={styles.cell} id={`developer-${i}`}>{item.developers.join(', ')}</td>
+                <td className={styles.cell} id={`publisher-${i}`}>{item.publishers.join(', ')}</td>
               </tr>
             ))}
         </tbody>
