@@ -9,14 +9,18 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@headlessui/react": "^1.6.0",
     "@heroicons/react": "^1.0.6",
+    "chart.js": "^3.7.1",
     "mysql": "^2.18.1",
     "next": "12.1.4",
     "next-connect": "^0.12.2",
     "react": "^18.0.0",
+    "react-chartjs-2": "^4.1.0",
     "react-dom": "18.0.0"
   },
   "devDependencies": {
+    "@tailwindcss/forms": "^0.5.0",
     "autoprefixer": "^10.4.4",
     "eslint": "8.12.0",
     "eslint-config-next": "12.1.4",

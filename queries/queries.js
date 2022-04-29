@@ -7,7 +7,7 @@ const getData = async (req, res) => {
 
 const insertUser = async (req, res) => {
   const body = JSON.parse(req.body)
-  executeQuery("INSERT INTO USER(name, age) VALUES(?,?)", [body.name, body.age])
+  executeQuery("INSERT INTO user(name, age) VALUES(?,?)", [body.name, body.age])
   .then(data => {
     console.log(data)
     res.status(200).json(data)
@@ -66,7 +66,7 @@ const getGames = async (req, res) => {
 
 const insertSelection = async (req, res) => {
   const body = JSON.parse(req.body)
-  executeQuery("INSERT INTO USER_SELECTION(user_id, video_game_id, selection) VALUES(?,?,?)", [body.user_id, body.video_game_id, body.selection])
+  executeQuery("INSERT INTO user_selection(user_id, video_game_id, selection) VALUES(?,?,?)", [body.user_id, body.video_game_id, body.selection])
   .then(data => {
     console.log(data)
     res.status(200).json(data)
@@ -137,7 +137,7 @@ const normalizeDevelopers = async (req, res) => {
   })
 
   developers.map(item => {
-    executeQuery("INSERT INTO DEVELOPER(name) VALUES(?)", [item])
+    executeQuery("INSERT INTO developer(name) VALUES(?)", [item])
     .then(data => {
       console.log(data)
     })
@@ -161,7 +161,7 @@ const normalizePublishers = async (req, res) => {
   })
   
   publishers.map(item => {
-    executeQuery("INSERT INTO PUBLISHER(name) VALUES(?)", [item])
+    executeQuery("INSERT INTO publisher(name) VALUES(?)", [item])
     .then(data => {
       console.log(data)
     })
@@ -185,7 +185,7 @@ const normalizeGenres = async (req, res) => {
   })
 
   genres.map(item => {
-    executeQuery("INSERT INTO GENRE(name) VALUES(?)", [item])
+    executeQuery("INSERT INTO genre(name) VALUES(?)", [item])
     .then(data => {
       console.log(data)
     })
@@ -200,7 +200,7 @@ const normalizeGames = async (req, res) => {
   let data = await executeQuery("select titles, released from mytable", [])
 
   data.map(item => {
-    executeQuery("INSERT INTO VIDEO_GAME(title, released) VALUES(?, ?)", [item.titles, item.released])
+    executeQuery("INSERT INTO video_games(title, released) VALUES(?, ?)", [item.titles, item.released])
     .then(data => {
       console.log(data)
     })
@@ -263,7 +263,7 @@ const normalize = async (req, res) => {
     value.developers.map((dev) => {
       value.publishers.map((pub) => {
         value.genres.map((gen) => {
-          executeQuery("INSERT INTO VIDEO_GAME_INFO(video_game_id, developer_id, publisher_id, genre_id) VALUES(?,?,?,?)", [key, dev, pub, gen])
+          executeQuery("INSERT INTO video_game_info(video_game_id, developer_id, publisher_id, genre_id) VALUES(?,?,?,?)", [key, dev, pub, gen])
           .then(data => {
             console.log(data)
           })
@@ -291,6 +291,17 @@ const getAllResults = async (req, res) => {
   res.send(data)
 }
 
+const getPercentLoved = async (req, res) => {
+  const id = req.query.id
+  let data = await executeQuery(
+    `SELECT genre, nlove, 
+    ROUND(nlove * 100 / (SELECT COUNT(*) AS total FROM video_games.genre_selections WHERE user_id = ?), 2) AS percent
+    FROM video_games.genre_selections 
+    WHERE user_id = ? GROUP BY genre;`
+  , [id, id])
+  res.send(data)
+}
+
 export { 
   getData, 
   insertUser, 
@@ -305,5 +316,6 @@ export {
   normalizeGames, 
   normalize,
   getResults,
-  getAllResults
+  getAllResults,
+  getPercentLoved
 } 
