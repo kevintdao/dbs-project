@@ -9,9 +9,10 @@ export default function RecommendedGames({ data }) {
   }
 
   const labels = {
-    text: ['Title', "Date", 'Publisher'],
-    id: ['title', 'date', 'publisher']
+    text: ['Title', "Released Date", 'Publishers', 'Developers'],
+    id: ['title', 'date', 'publishers', 'developers']
   }
+  console.log(data)
 
   return (
     <>
@@ -27,8 +28,9 @@ export default function RecommendedGames({ data }) {
             {data.map((item, i) => (
               <tr key={i}>
                 <td className={styles.cell} id={`title-${i}`}>{item.title}</td>
-                <td className={styles.cell} id={`date-${i}`}>{item.date}</td>
-                <td className={styles.cell} id={`publisher-${i}`}>{item.publisher}</td>
+                <td className={styles.cell} id={`released-${i}`}>{item.released}</td>
+                <td className={styles.cell} id={`developer-${i}`}>{item.developers}</td>
+                <td className={styles.cell} id={`publisher-${i}`}>{item.publishers}</td>
               </tr>
             ))}
         </tbody>
