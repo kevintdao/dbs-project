@@ -291,6 +291,17 @@ const getAllResults = async (req, res) => {
   res.send(data)
 }
 
+const getPercentLoved = async (req, res) => {
+  const id = req.query.id
+  let data = await executeQuery(
+    `SELECT genre, nlove, 
+    ROUND(nlove * 100 / (SELECT COUNT(*) AS total FROM video_games.genre_selections WHERE user_id = ?), 2) AS percent
+    FROM video_games.genre_selections 
+    WHERE user_id = ? GROUP BY genre;`
+  , [id, id])
+  res.send(data)
+}
+
 export { 
   getData, 
   insertUser, 
@@ -305,5 +316,6 @@ export {
   normalizeGames, 
   normalize,
   getResults,
-  getAllResults
+  getAllResults,
+  getPercentLoved
 } 
