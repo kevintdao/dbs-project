@@ -4,7 +4,7 @@ import { Bar } from 'react-chartjs-2'
 export default function AllResultsGraph({ data }) {
   const options = {
     responsive: true,
-    maintainAspectRatio: true,
+    maintainAspectRatio: false,
     plugins: {
       legend: {
         position: 'top',
@@ -31,8 +31,8 @@ export default function AllResultsGraph({ data }) {
   }
 
   return (
-    <>
-      <Bar options={options} data={resultData} />
-    </>
+    <div>
+      <Bar options={options} data={resultData} height={"576px"}/>
+    </div>
   )
 }

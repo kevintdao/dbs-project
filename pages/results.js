@@ -25,6 +25,7 @@ ChartJS.register(
   Tooltip,
   Legend
 )
+ChartJS.defaults.color = '#000'
 
 export default function results() {
   const [data, setData] = useState()
