@@ -93,7 +93,7 @@ export default function results() {
         </div>
         {userChoice == 'table' && <Results data={data.result} />}
         {userChoice == 'graph' && <ResultsGraph data={data.percent} />}
-        <hr />
+        <hr className='mt-2' />
       </div>}
 
 
