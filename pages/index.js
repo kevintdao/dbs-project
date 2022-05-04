@@ -70,8 +70,8 @@ export default function Home() {
 
           <div className={styles.input_container}>
             <label htmlFor="number">Number of Games</label>
-            <input type="number" name="number" id="number" className={styles.input} required defaultValue={10} />
-            <p className='text-gray-600 text-xs'>Default: 10</p>
+            <input type="number" name="number" id="number" className={styles.input} required defaultValue={10} min={5} max={30}/>
+            <p className='text-gray-600 text-xs'>Default: 10 | Min: 5 | Max: 30</p>
           </div>
         </div>
         <input className={styles.button} type="submit" value="Submit" />
