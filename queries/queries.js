@@ -353,11 +353,10 @@ const getRecommended = async (req, res) => {
     JOIN publisher AS p ON p.id = vgi.publisher_id
     JOIN genre AS g ON g.id = vgi.genre_id
     WHERE vgi.video_game_id IN (
-      SELECT video_game_id FROM suggested_game WHERE user_id = ?
+    SELECT video_game_id FROM suggested_game WHERE user_id = ?
     )
-    AND vgi.video_game_id NOT IN ((SELECT video_game_id FROM user_selection WHERE user_id = ?))
     ORDER BY vg.id;
-    `, [id, id])
+    `, [id])
   
     let ids = []
     games.map((game, i) => {
