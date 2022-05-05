@@ -335,18 +335,10 @@ const getRecommended = async (req, res) => {
     ORDER BY RAND() LIMIT 5;
     `, [id])
   
-    gamesId.map(item => {
-      executeQuery("INSERT INTO suggested_game(user_id, video_game_id, position) VALUES(?,?,?)", [id, item.video_game_id, 0])
-      .then(data => {
-        console.log(data)
-      })
-      .catch(err => {
-        console.log(err)
-      })
+    gamesId.map(async (item) => {
+      await executeQuery("INSERT INTO suggested_game(user_id, video_game_id, position) VALUES(?,?,?)", [id, item.video_game_id, 0])
     })
 
-    await delay(1000)
-  
     let games = await executeQuery(`
     SELECT DISTINCT(vg.id), vg.title AS title, vg.released AS released, d.name AS developer, p.name AS publisher, g.name AS genre
     FROM video_game_info AS vgi
