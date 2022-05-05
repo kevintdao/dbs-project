@@ -344,6 +344,8 @@ const getRecommended = async (req, res) => {
         console.log(err)
       })
     })
+
+    await delay(1000)
   
     let games = await executeQuery(`
     SELECT DISTINCT(vg.id), vg.title AS title, vg.released AS released, d.name AS developer, p.name AS publisher, g.name AS genre
